@@ -22,7 +22,7 @@ class Library
     # end
     first_book_year = author.books.min_by do |book|
       book.publication_year.to_i
-      
+
     end
 
     last_book_year = author.books.max_by do |book|
@@ -31,8 +31,8 @@ class Library
     end
     # binding.pry
     time_frame = {
-      :start => first_book_year.to_s,
-      :end => last_book_year.to_s
+      :start => first_book_year.publication_year,
+      :end => last_book_year.publication_year
     }
     return time_frame
   end
