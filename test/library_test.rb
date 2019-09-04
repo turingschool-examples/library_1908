@@ -25,6 +25,7 @@ class LibraryTest < Minitest::Test
     assert_equal "Denver Public Library", @dpl.name
     assert_equal [], @dpl.books
     assert_equal [], @dpl.authors
+    assert_equal [], @dpl.checked_out_books
   end
 
   def test_can_add_authors
@@ -50,6 +51,57 @@ class LibraryTest < Minitest::Test
     hash = {:start=>"1960", :end=>"1960"}
     assert_equal hash, @dpl.publication_time_frame_for(@harper_lee)
   end
-  
+
+  def test_can_checkout_book
+    @dpl.add_author(@charlotte_bronte)
+    @dpl.add_author(@harper_lee)
+    assert_equal true, @dpl.checkout(@jane_eyre)
+    assert_equal [@jane_eyre], @dpl.checked_out_books
+
+    assert_equal true, @dpl.checkout(@professor)
+    assert_equal [@jane_eyre, @professor], @dpl.checked_out_books
+  end
+
+  def test_increments_checked_out_counter
+    @dpl.add_author(@charlotte_bronte)
+    @dpl.checkout(@jane_eyre)
+    @dpl.return(@jane_eyre)
+    @dpl.checkout(@jane_eyre)
+    assert_equal 2, @dpl.times_checked_out[@jane_eyre]
+  end
+
+  def test_cannot_checkout_books_that_do_not_exist
+    assert_equal false, @dpl.checkout(@jane_eyre)
+  end
+
+  def test_cannot_checkout_books_that_are_already_checked_out
+    @dpl.add_author(@charlotte_bronte)
+    @dpl.checkout(@jane_eyre)
+    assert_equal false, @dpl.checkout(@jane_eyre)
+  end
+
+  def test_can_return_book
+    @dpl.add_author(@charlotte_bronte)
+    @dpl.checkout(@jane_eyre)
+    @dpl.return(@jane_eyre)
+    assert_equal [], @dpl.checked_out_books
+  end
+
+  def test_can_get_most_popular_books
+    @dpl.add_author(@charlotte_bronte)
+    @dpl.checkout(@jane_eyre)
+    @dpl.return(@jane_eyre)
+    @dpl.checkout(@jane_eyre)
+    assert_equal @jane_eyre, @dpl.most_popular_book
+
+    @dpl.checkout(@professor)
+    @dpl.return(@professor)
+    @dpl.checkout(@professor)
+    @dpl.return(@professor)
+    @dpl.checkout(@professor)
+    @dpl.return(@professor)
+    assert_equal @professor, @dpl.most_popular_book
+  end
+
 end
 
