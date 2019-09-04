@@ -4,8 +4,8 @@ class Book
   def initialize(book_hash)
     @title = book_hash[:title]
     @author = {
-              first_name: book_hash[:author_first_name],  
-              last_name: book_hash[:author_last_name]
+      first_name: book_hash[:author_first_name],  
+      last_name: book_hash[:author_last_name]
     }
     @publication_date = book_hash[:publication_date]
   end
@@ -15,7 +15,7 @@ class Book
   end
 
   def publication_year
-    @publication_date.split[2]
+    @publication_date[-4..-1]
   end
 
 end
