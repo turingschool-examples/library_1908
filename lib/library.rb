@@ -1,11 +1,16 @@
 class Library
-  attr_reader :name, :books, :authors, :checked_out_books
+  attr_reader :name,
+              :books,
+              :authors,
+              :checked_out_books,
+              :checkout_tally
 
   def initialize(name)
     @name = name
     @books = []
     @authors = []
     @checked_out_books = []
+    @checkout_tally = Hash.new(0)
   end
 
   def add_author(author)
@@ -28,6 +33,7 @@ class Library
   def checkout(book)
     if @books.include?(book) && !@checked_out_books.include?(book)
       @checked_out_books.push(book)
+      @checkout_tally[book] += 1
       true
     else
       false
@@ -36,6 +42,10 @@ class Library
 
   def return(book)
     @checked_out_books.delete(book)
+  end
+
+  def most_popular_book
+    @checkout_tally.key(@checkout_tally.values.max)
   end
 
 end

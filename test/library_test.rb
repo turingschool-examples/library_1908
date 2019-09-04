@@ -1,6 +1,5 @@
 require 'minitest/autorun'
 require 'minitest/pride'
-require './lib/book'
 require './lib/author'
 require './lib/library'
 
@@ -27,6 +26,7 @@ class LibraryTest < Minitest::Test
     assert_equal [], @dpl.books
     assert_equal [], @dpl.authors
     assert_equal [], @dpl.checked_out_books
+    assert_equal Hash.new(0), @dpl.checkout_tally
   end
 
   def test_it_can_add_authors
@@ -67,6 +67,9 @@ class LibraryTest < Minitest::Test
 
     assert_equal true, @dpl.checkout(@jane_eyre)
     assert_equal [@jane_eyre], @dpl.checked_out_books
+
+    assert_equal true, @dpl.checkout(@villette)
+    assert_equal [@jane_eyre, @villette], @dpl.checked_out_books
   end
 
   def test_it_cannot_check_out_a_book_that_is_checked_out
@@ -82,6 +85,37 @@ class LibraryTest < Minitest::Test
     @dpl.return(@jane_eyre)
 
     assert_equal [], @dpl.checked_out_books
+  end
+
+  def test_it_knows_the_most_popular_book
+    @dpl.add_author(@charlotte_bronte)
+    @dpl.add_author(@harper_lee)
+    @dpl.checkout(@jane_eyre)
+    @dpl.checkout(@villette)
+
+    @dpl.checkout(@mockingbird)
+    @dpl.return(@mockingbird)
+    @dpl.checkout(@mockingbird)
+    @dpl.return(@mockingbird)
+    @dpl.checkout(@mockingbird)
+
+    assert_equal @mockingbird, @dpl.most_popular_book
+  end
+
+  def test_it_returns_first_book_if_most_popular_is_a_tie
+    @dpl.add_author(@charlotte_bronte)
+    @dpl.add_author(@harper_lee)
+    @dpl.checkout(@jane_eyre)
+
+    @dpl.checkout(@villette)
+    @dpl.return(@villette)
+    @dpl.checkout(@villette)
+
+    @dpl.checkout(@mockingbird)
+    @dpl.return(@mockingbird)
+    @dpl.checkout(@mockingbird)
+
+    assert_equal @villette, @dpl.most_popular_book
   end
 
 end
