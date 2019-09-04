@@ -2,6 +2,7 @@ require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/library'
 require './lib/author'
+require 'pry'
 
 
 class LibraryTest < Minitest::Test
@@ -16,6 +17,8 @@ class LibraryTest < Minitest::Test
     @harper_lee = Author.new({first_name: "Harper", last_name: "Lee"})
     @mockingbird = @harper_lee.write("To Kill a Mockingbird", "July 11, 1960")
 
+    @dpl.add_author(@charlotte_bronte)
+    @dpl.add_author(@harper_lee)
   end
 
   def test_it_exists
@@ -23,18 +26,16 @@ class LibraryTest < Minitest::Test
   end
 
   def test_it_can_add_author
-    @dpl.add_author(@charlotte_bronte)
-    @dpl.add_author(@harper_lee)
-
     assert_equal [@charlotte_bronte, @harper_lee], @dpl.authors
   end
 
   def test_it_adds_authors_books
-    @dpl.add_author(@charlotte_bronte)
-    @dpl.add_author(@harper_lee)
-
     assert_equal 4, @dpl.books.count
   end
 
+  def test_it_knows_time_frame
+    binding.pry
+    # assert_equal {:start => "1847", :end => "1857"}, @dpl.publication_time_frame_for(@charlotte_bronte)
+  end
 
 end
