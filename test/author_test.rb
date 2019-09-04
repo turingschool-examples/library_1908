@@ -28,4 +28,12 @@ class AuthorTest < Minitest::Test
     assert_equal Book, jane_eyre.class
     assert_equal "Jane Eyre", jane_eyre.title
   end
+
+  def test_it_stores_books
+    jane_eyre = @charlotte_bronte.write("Jane Eyre", "October 16, 1847")
+    @charlotte_bronte.write("Villette", "1853")
+  
+    assert_equal 2, @charlotte_bronte.books.count
+  end
+
 end
