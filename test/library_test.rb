@@ -88,10 +88,7 @@ class LibraryTest < Minitest::Test
   end
 
   def test_it_knows_the_most_popular_book
-    @dpl.add_author(@charlotte_bronte)
-    @dpl.add_author(@harper_lee)
-    @dpl.checkout(@jane_eyre)
-    @dpl.checkout(@villette)
+    add_bronte_and_lee_and_checkout_jane_eyre_and_villette
 
     @dpl.checkout(@mockingbird)
     @dpl.return(@mockingbird)
@@ -103,11 +100,8 @@ class LibraryTest < Minitest::Test
   end
 
   def test_it_returns_first_book_if_most_popular_is_a_tie
-    @dpl.add_author(@charlotte_bronte)
-    @dpl.add_author(@harper_lee)
-    @dpl.checkout(@jane_eyre)
+    add_bronte_and_lee_and_checkout_jane_eyre_and_villette
 
-    @dpl.checkout(@villette)
     @dpl.return(@villette)
     @dpl.checkout(@villette)
 
@@ -116,6 +110,16 @@ class LibraryTest < Minitest::Test
     @dpl.checkout(@mockingbird)
 
     assert_equal @villette, @dpl.most_popular_book
+  end
+
+
+  # Helper methods
+
+  def add_bronte_and_lee_and_checkout_jane_eyre_and_villette
+    @dpl.add_author(@charlotte_bronte)
+    @dpl.add_author(@harper_lee)
+    @dpl.checkout(@jane_eyre)
+    @dpl.checkout(@villette)
   end
 
 end
