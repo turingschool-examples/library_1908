@@ -20,4 +20,29 @@ class BookTest < Minitest::Test
     assert_equal "Harper Lee", @book.author
     assert_equal 1960, @book.publication_year
   end
+
+  def test_popularity
+    assert_equal 0, @book.popularity
+
+    @book.popularity += 1
+    @book.popularity += 1
+
+    assert_equal 2, @book.popularity
+  end
+
+  def test_checked_out?
+    assert_equal false, @book.checked_out?
+
+    @book.check_out
+
+    assert_equal true, @book.checked_out?
+  end
+
+  def test_return
+    assert_equal false, @book.checked_out?
+    @book.check_out
+    assert_equal true, @book.checked_out?
+    @book.return
+    assert_equal false, @book.checked_out?
+  end
 end
