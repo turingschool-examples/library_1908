@@ -10,11 +10,8 @@ class Author
   end
 
   def write(title, publication_date)
-    # make a new instance of Book class
     book = Book.new({author_first_name: @first_name, author_last_name: @last_name, title: title, publication_date: publication_date})
-    # add that instance to the books array
     @books << book
-    # require 'pry'; binding.pry
     book
   end
 end
