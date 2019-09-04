@@ -27,9 +27,9 @@ class LibraryTest < Minitest::Test
     @dpl.add_author(@harper_lee)
     jane_eyre = @charlotte_bronte.write("Jane Eyre", "October 16, 1847")
     professor = @charlotte_bronte.write("The Professor", "1857")
-    villette = @charlotte_bronte.write("Villette", "1853")
-    mockingbird = @harper_lee.write("To Kill a Mockingbird", "July 11, 1960") 
+    # villette = @charlotte_bronte.write("Villette", "1853")
+    mockingbird = @harper_lee.write("To Kill a Mockingbird", "July 11, 1960")
     assert_equal [@charlotte_bronte, @harper_lee], @dpl.authors
-    assert_equal [@jane_eyre, @professor, @mockingbird], @dpl.books
+    assert_equal [jane_eyre, professor, mockingbird], @dpl.books
   end
 end

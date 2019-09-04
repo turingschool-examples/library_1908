@@ -10,5 +10,11 @@ class Library
 
   def add_author(author)
     @authors << author
+    @books << author.books
+    # require 'pry'; binding.pry
+  end
+
+  def books
+    @books.flatten
   end
 end
