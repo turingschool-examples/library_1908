@@ -12,4 +12,8 @@ class AuthorTest < Minitest::Test
   def test_it_exists
     assert_instance_of Author, @charlotte_bronte
   end
+
+  def test_it_knows_full_name
+    assert_equal "Charlotte Bronte", @charlotte_bronte.name
+  end
 end

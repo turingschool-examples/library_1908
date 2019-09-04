@@ -5,5 +5,8 @@ class Author
     @last_name = author_hash[:last_name]
   end
 
-  
+  def name
+    @first_name + " " + @last_name
+  end
+
 end
