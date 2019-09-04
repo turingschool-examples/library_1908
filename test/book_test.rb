@@ -29,4 +29,20 @@ class BookTest < Minitest::Test
 
     assert_equal 2, @book.popularity
   end
+
+  def test_checked_out?
+    assert_equal false, @book.checked_out?
+
+    @book.check_out
+
+    assert_equal true, @book.checked_out?
+  end
+
+  def test_return
+    assert_equal false, @book.checked_out?
+    @book.check_out
+    assert_equal true, @book.checked_out?
+    @book.return
+    assert_equal false, @book.checked_out?
+  end
 end

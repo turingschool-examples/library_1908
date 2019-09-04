@@ -5,7 +5,6 @@ class Library
     @name = name
     @books = []
     @authors = []
-    @checked_out_books = []
   end
 
   def add_author(author)
@@ -25,9 +24,8 @@ class Library
   end
 
   def checkout(book)
-    if books.include?(book)
-      checked_out_books << book
-      books.delete(book)
+    if books.include?(book) && !book.checked_out?
+      book.check_out
       book.popularity += 1
       return true
     else
@@ -36,17 +34,15 @@ class Library
   end
 
   def checked_out_books
-    @checked_out_books
+    books.find_all {|book| book.checked_out? }
   end
 
   def return(book)
-    books << book
-    checked_out_books.delete(book)
+    book.return
   end
 
   def most_popular_book
-    all_books = checked_out_books + books
-    all_books.max_by {|book| book.popularity }
+    books.max_by {|book| book.popularity }
   end
 
 end
