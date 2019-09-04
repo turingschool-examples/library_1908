@@ -26,6 +26,7 @@ class LibraryTest < Minitest::Test
     assert_equal 'Denver Public Library', @dpl.name
     assert_equal [], @dpl.books
     assert_equal [], @dpl.authors
+    assert_equal [], @dpl.checked_out_books
   end
 
   def test_it_can_add_authors
@@ -54,6 +55,33 @@ class LibraryTest < Minitest::Test
 
     expected = { start: '1960', end: '1960' }
     assert_equal expected, @dpl.publication_time_frame_for(@harper_lee)
+  end
+
+  def test_it_cannot_check_out_a_book_it_does_not_have
+    assert_equal false, @dpl.checkout(@mockingbird)
+    assert_equal false, @dpl.checkout(@jane_eyre)
+  end
+
+  def test_checked_out_books_are_added_to_array
+    @dpl.add_author(@charlotte_bronte)
+
+    assert_equal true, @dpl.checkout(@jane_eyre)
+    assert_equal [@jane_eyre], @dpl.checked_out_books
+  end
+
+  def test_it_cannot_check_out_a_book_that_is_checked_out
+    @dpl.add_author(@charlotte_bronte)
+    @dpl.checkout(@jane_eyre)
+
+    assert_equal false, @dpl.checkout(@jane_eyre)
+  end
+
+  def test_books_can_be_returned
+    @dpl.add_author(@charlotte_bronte)
+    @dpl.checkout(@jane_eyre)
+    @dpl.return(@jane_eyre)
+
+    assert_equal [], @dpl.checked_out_books
   end
 
 end
