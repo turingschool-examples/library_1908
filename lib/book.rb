@@ -8,6 +8,6 @@ class Book
     @author = "#{@author_first_name} #{@author_last_name}"
     @title = book[:title]
     @publication_date = book[:publication_date]
-    @publication_year = book[:publication_date].split[2]
+    @publication_year = book[:publication_date].split[-1]
   end
 end
