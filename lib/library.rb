@@ -20,4 +20,13 @@ class Library
     @books = books.flatten
   end
 
+  def publication_time_frame_for(author)
+    time_frame = {}
+    binding.pry
+    @books.each do |book|
+      book.publication_year.to_i
+     end
+     time_frame
+  end
+
 end

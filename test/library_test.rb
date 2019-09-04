@@ -39,6 +39,18 @@ class LibraryTest < MiniTest::Test
     assert_equal [@jane_eyre, @professor, @villette, @mockingbird], @dpl.books
   end
 
+  def test_time_frame_for_books_written_by_author
+    @dpl.add_author(@charlotte_bronte)
+    # @dpl.add_author(@harper_lee)
+    @charlotte_bronte.add_book(@jane_eyre)
+    @charlotte_bronte.add_book(@professor)
+    @charlotte_bronte.add_book(@villette)
+    # @harper_lee.add_book(@mockingbird)
+    @dpl.add_books_to_libray
+    expected = {:start=>"1847", :end=>"1857"}
+    assert_equal expected , @dpl.publication_time_frame_for(@charlotte_bronte)
+  end
+
 
 
 end
