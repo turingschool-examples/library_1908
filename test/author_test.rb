@@ -35,4 +35,5 @@ class AuthorTest < Minitest::Test
 
     assert_equal [jane_eyre, villette], @charlotte_bronte.books
   end
+
 end
