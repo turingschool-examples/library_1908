@@ -1,13 +1,14 @@
 class Book
-  attr_reader :title, :author, :publication_date, :publication_year
+  attr_reader :title, :author_first_name, :author_last_name, :publication_date, :publication_year
 
   def initialize(attributes)
     @title = attributes[:title]
-    @author = attributes[:author]
+    @author_first_name = attributes[:author_first_name]
+    @author_last_name = attributes[:author_last_name]
     @publication_date = attributes[:publication_date]
   end
 
-  def publicaiton_year
-    @publication_date[-4]
+  def publication_year
+    @publication_date[9..12]
   end
 end
