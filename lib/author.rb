@@ -7,6 +7,7 @@ class Author
     @first_name = author_details[:first_name]
     @last_name = author_details[:last_name]
     @books = []
+    @book_count = 0
   end
 
   def name
@@ -20,6 +21,7 @@ class Author
     title: title,
     publication_date: publication_date
     })
+    @book_count += 1
     @books.first
   end
 end
