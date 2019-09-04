@@ -28,6 +28,11 @@ class LibraryTest < Minitest::Test
     assert_equal [], @dpl.authors
   end
 
+  def test_it_starts_with_no_books_checked_out
+    assert_equal [], @dpl.checked_out_books
+    assert_equal ({}), @dpl.checkout_count
+  end
+
   def test_it_can_add_authors
     @dpl.add_author(@charlotte_bronte)
     assert_equal [@charlotte_bronte], @dpl.authors
@@ -44,5 +49,33 @@ class LibraryTest < Minitest::Test
 
     assert_equal ({:start => "1847", :end => "1857"}), @dpl.publication_time_frame_for(@charlotte_bronte)
     assert_equal ({:start => "1960", :end => "1960"}), @dpl.publication_time_frame_for(@harper_lee)
+  end
+
+  def test_it_can_loan_out_books
+    refute @dpl.checkout(@jane_eyre)
+
+    @dpl.add_author(@charlotte_bronte)
+    success = @dpl.checkout(@jane_eyre)
+
+    refute @dpl.book_inventory.include?(@jane_eyre)
+    assert @dpl.checked_out_books.include?(@jane_eyre)
+    assert success
+  end
+
+  def test_it_can_receive_loaned_books_back
+    @dpl.add_author(@charlotte_bronte)
+    @dpl.checkout(@jane_eyre)
+    success = @dpl.return(@jane_eyre)
+
+    assert @dpl.book_inventory.include?(@jane_eyre)
+    assert success
+  end
+
+  def test_it_can_determine_most_popular_book_or_books
+    @dpl.add_author(@charlotte_bronte)
+    @dpl.checkout(@jane_eyre)
+    @dpl.checkout(@professor)
+
+    assert_equal [@jane_eyre, @professor], @dpl.most_popular_book
   end
 end
