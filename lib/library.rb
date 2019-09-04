@@ -11,5 +11,6 @@ class Library
 
   def add_author(author)
     @authors << author
+    @books += author.books
   end
 end

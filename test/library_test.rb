@@ -29,5 +29,12 @@ class LibraryTest < Minitest::Test
     assert_equal [@charlotte_bronte, @harper_lee], @dpl.authors
   end
 
+  def test_it_adds_authors_books
+    @dpl.add_author(@charlotte_bronte)
+    @dpl.add_author(@harper_lee)
+
+    assert_equal 4, @dpl.books.count
+  end
+
 
 end
