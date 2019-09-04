@@ -15,5 +15,6 @@ class Author
     # add that instance to the books array
     @books << book
     # require 'pry'; binding.pry
+    book
   end
 end
