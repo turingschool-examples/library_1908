@@ -35,7 +35,7 @@ class LibraryTest < Minitest::Test
 
   def test_it_knows_time_frame
     binding.pry
-    # assert_equal {:start => "1847", :end => "1857"}, @dpl.publication_time_frame_for(@charlotte_bronte)
+    assert_equal {:start => "1847", :end => "1857"}, @dpl.publication_time_frame_for(@charlotte_bronte)
   end
 
 end
