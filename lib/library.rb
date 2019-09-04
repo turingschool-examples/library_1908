@@ -16,20 +16,14 @@ class Library
   end
 
   def publication_time_frame_for(author)
-
-    # first_book_year = author.books.each do |book|
-    #   book.publication_year.to_i.max
-    # end
     first_book_year = author.books.min_by do |book|
       book.publication_year.to_i
-
     end
 
     last_book_year = author.books.max_by do |book|
       book.publication_year.to_i
-      # return book.publication_year
     end
-    # binding.pry
+  
     time_frame = {
       :start => first_book_year.publication_year,
       :end => last_book_year.publication_year
