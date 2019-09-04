@@ -57,7 +57,6 @@ class LibraryTest < Minitest::Test
     @dpl.add_author(@charlotte_bronte)
     success = @dpl.checkout(@jane_eyre)
 
-    refute @dpl.book_inventory.include?(@jane_eyre)
     assert @dpl.checked_out_books.include?(@jane_eyre)
     assert success
   end
@@ -67,7 +66,7 @@ class LibraryTest < Minitest::Test
     @dpl.checkout(@jane_eyre)
     success = @dpl.return(@jane_eyre)
 
-    assert @dpl.book_inventory.include?(@jane_eyre)
+    refute @dpl.checked_out_books.include?(@jane_eyre)
     assert success
   end
 
@@ -77,5 +76,10 @@ class LibraryTest < Minitest::Test
     @dpl.checkout(@professor)
 
     assert_equal [@jane_eyre, @professor], @dpl.most_popular_book
+
+    @dpl.return(@jane_eyre)
+    @dpl.checkout(@jane_eyre)
+
+    assert_equal @jane_eyre, @dpl.most_popular_book
   end
 end

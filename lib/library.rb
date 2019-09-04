@@ -5,13 +5,11 @@ class Library
   attr_reader :name,
               :authors,
               :checked_out_books,
-              :book_inventory,
               :checkout_count
 
   def initialize(name)
     @name = name
     @authors = []
-    @book_inventory = []
     @checked_out_books = []
     @checkout_count = Hash.new(0)
   end
@@ -27,8 +25,6 @@ class Library
 
   def add_author(author)
     @authors << author
-    @book_inventory << author.books
-    @book_inventory = @book_inventory.flatten
   end
 
   def publication_time_frame_for(author)
@@ -46,10 +42,9 @@ class Library
   end
 
   def checkout(book)
-    if !@book_inventory.include?(book)
+    if !@books.nil? || @checked_out_books.include?(book) || !(books.include?(book))
       false
     else
-      @book_inventory.delete(book)
       @checked_out_books << book
       @checkout_count[book] += 1
       true
@@ -58,7 +53,6 @@ class Library
 
   def return(book)
     if @checked_out_books.include?(book)
-      @book_inventory << book
       @checked_out_books.delete(book)
       true
     else
@@ -69,12 +63,15 @@ class Library
   def most_popular_book
     most_popular = ""
     most_checkouts = 0
-    @checkout_count.keys.each do |book, checkouts|
+    @checkout_count.each do |book, checkouts|
+      #require 'pry'; binding.pry
       if checkouts > most_checkouts
         most_popular = book
+        most_checkouts = checkouts
       elsif checkouts == most_checkouts
         most_popular = [most_popular] << book
       end
     end
+    most_popular
   end
 end
