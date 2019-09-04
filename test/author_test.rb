@@ -1,6 +1,7 @@
 require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/author'
+require 'pry'
 
 
 class AuthorTest < Minitest::Test
@@ -21,4 +22,10 @@ class AuthorTest < Minitest::Test
     assert_equal [], @charlotte_bronte.books
   end
 
+  def test_it_can_write_book
+    jane_eyre = @charlotte_bronte.write("Jane Eyre", "October 16, 1847")
+
+    assert_equal Book, jane_eyre.class
+    assert_equal "Jane Eyre", jane_eyre.title
+  end
 end

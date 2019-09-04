@@ -1,3 +1,4 @@
+require './lib/book'
 class Author
   attr_reader :books
   def initialize(author_hash)
@@ -8,6 +9,10 @@ class Author
 
   def name
     @first_name + " " + @last_name
+  end
+
+  def write(title, date)
+    Book.new({author_first_name: @first_name, author_last_name: @last_name, title: title, publication_date: date})
   end
 
 end
