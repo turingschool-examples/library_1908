@@ -41,9 +41,9 @@ class LibraryTest < Minitest::Test
   end
 
   def test_publication_timeframe
-    jane_eyre = @charlotte_bronte.write("Jane Eyre", "October 16, 1847")
-    professor = @charlotte_bronte.write("The Professor", "1857")
-    villette = @charlotte_bronte.write("Villette", "1853")
+    @charlotte_bronte.write("Jane Eyre", "October 16, 1847")
+    @charlotte_bronte.write("The Professor", "1857")
+    @charlotte_bronte.write("Villette", "1853")
     @dpl.add_author(@charlotte_bronte)
     expected = {:start=>"1847", :end=>"1857"}
     assert_equal expected, @dpl.publication_time_frame_for(@charlotte_bronte)
